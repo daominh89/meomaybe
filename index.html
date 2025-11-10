@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Amazing Teachers</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(180deg, #eef2f3, #ffffff);
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 60px 20px;
+    background: #2e86de;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  header h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.2em;
+  }
+
+  header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+  }
+
+  .teachers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    padding: 100px 0;
+  }
+
+  .teacher {
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .teacher.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .teacher:nth-child(even) {
+    flex-direction: row-reverse;
+    transform: translateX(100px);
+  }
+
+  .teacher:nth-child(even).visible {
+    transform: translateX(0);
+  }
+
+  .teacher img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #2e86de;
+  }
+
+  .info {
+    flex: 1;
+  }
+
+  .info h2 {
+    margin: 0;
+    color: #2e86de;
+    font-size: 1.8em;
+  }
+
+  .info p {
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 1.1em;
+    color: #555;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    background: #2e86de;
+    color: white;
+    margin-top: 80px;
+  }
+</style>
+</head>
+
+<body>
+  <header>
+    <h1>Meet Our Inspiring Teachers</h1>
+    <p>Each one shares wisdom that guides us every day</p>
+  </header>
+
+  <section class="teachers">
+    <!-- Teacher cards -->
+    <!-- You can replace image URLs with actual photos -->
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=1" alt="Teacher 1" />
+      <div class="info">
+        <h2>Mr. Nguyen Van A</h2>
+        <p>"Teaching is the art of awakening joy in creative expression."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=2" alt="Teacher 2" />
+      <div class="info">
+        <h2>Ms. Tran Thi B</h2>
+        <p>"A good teacher can inspire hope, ignite imagination, and instill love for learning."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=3" alt="Teacher 3" />
+      <div class="info">
+        <h2>Mr. Le Minh C</h2>
+        <p>"Knowledge shared is knowledge multiplied."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=4" alt="Teacher 4" />
+      <div class="info">
+        <h2>Ms. Pham Hong D</h2>
+        <p>"Learning never exhausts the mind — it fuels it."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=5" alt="Teacher 5" />
+      <div class="info">
+        <h2>Mr. Hoang Quoc E</h2>
+        <p>"Success is not the key to happiness. Happiness is the key to success."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=6" alt="Teacher 6" />
+      <div class="info">
+        <h2>Ms. Nguyen Bao F</h2>
+        <p>"To teach is to touch a life forever."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=7" alt="Teacher 7" />
+      <div class="info">
+        <h2>Mr. Tran Dinh G</h2>
+        <p>"Education is not preparation for life; education is life itself."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=8" alt="Teacher 8" />
+      <div class="info">
+        <h2>Ms. Vo Thi H</h2>
+        <p>"Great teachers inspire greatness in others."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=9" alt="Teacher 9" />
+      <div class="info">
+        <h2>Mr. Dang Xuan I</h2>
+        <p>"Every child deserves a champion — someone who believes in them."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=10" alt="Teacher 10" />
+      <div class="info">
+        <h2>Ms. Nguyen Kieu J</h2>
+        <p>"The best teachers show you where to look, but not what to see."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=11" alt="Teacher 11" />
+      <div class="info">
+        <h2>Mr. Truong Anh K</h2>
+        <p>"Teaching is the one profession that creates all other professions."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=12" alt="Teacher 12" />
+      <div class="info">
+        <h2>Ms. Le Quynh L</h2>
+        <p>"Learning is a treasure that will follow its owner everywhere."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=13" alt="Teacher 13" />
+      <div class="info">
+        <h2>Mr. Phan Duc M</h2>
+        <p>"Good teaching is more about passion and empathy than technique."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=14" alt="Teacher 14" />
+      <div class="info">
+        <h2>Ms. Do Thanh N</h2>
+        <p>"The influence of a great teacher can never be erased."</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <img src="https://picsum.photos/200?random=15" alt="Teacher 15" />
+      <div class="info">
+        <h2>Mr. Nguyen Van O</h2>
+        <p>"Education is the most powerful weapon to change the world."</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Our School | Designed with ❤️ by Students</p>
+  </footer>
+
+<script>
+  const teachers = document.querySelectorAll(".teacher");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.3 });
+
+  teachers.forEach(t => observer.observe(t));
+</script>
+</body>
+</html>
