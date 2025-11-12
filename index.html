@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mừng 20/11</title>
   <style>
     * {
@@ -10,16 +10,15 @@
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      /* Allow scrolling */
       overflow-x: hidden;
       min-height: 100vh;
     }
-    
+
     #bubble-canvas {
       position: fixed;
       top: 0;
@@ -28,113 +27,58 @@
       height: 100%;
       z-index: -1;
     }
-    
+
     .container {
-      position: relative;
-      width: 100%;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      min-height: 100vh;
       padding: 20px;
     }
-    
-    .card-container {
+
+    .iframe-wrapper {
       position: relative;
       width: 100%;
       max-width: 800px;
-      margin: 20px auto;
-      box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+      height: 0;
+      padding-top: 56.25%;
       border-radius: 8px;
       overflow: hidden;
+      box-shadow: 0 2px 8px rgba(63, 69, 81, 0.16);
+      margin: 1.6em 0 0.9em;
     }
-    
-    .card-container iframe {
+
+    .iframe-wrapper iframe {
+      position: absolute;
       width: 100%;
-      height: 500px;
+      height: 100%;
+      top: 0;
+      left: 0;
       border: none;
     }
-    
-    .content {
-      max-width: 600px;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      margin: 20px 0;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-    
+
     .info {
       text-align: center;
       font-size: 0.9rem;
-      opacity: 0.7;
-      margin-top: 20px;
-    }
-    
-    .color-indicator {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      opacity: 0;
-    }
-    
-    .phase {
-      opacity: 0;
-    }
-    
-    /* Add some extra content to demonstrate scrolling */
-    .extra-content {
-      width: 100%;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(5px);
-    }
-    
-    .extra-content h2 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    
-    .extra-content p {
-      margin-bottom: 15px;
+      opacity: 0.8;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <canvas id="bubble-canvas"></canvas>
-  
-  <div class="container">
-    
-    <div style="position: relative; width: 100%; height: 0; padding-top: 562.2255%;
+ <div class="container">
+      <div style="position: relative; width: 100%; height: 0; padding-top: 562.2255%;
  padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAG4Q41u9tE/lrxja76sRw6uzkKTyChPUg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-    <div class="info">
-      Học sinh THPT Võ Thị Sáu kính tặng quý thầy cô. Lời cảm ơn gửi từ lớp 12A11!   ♥♡♥♡♥
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https://www.canva.com/design/DAG4Q41u9tE/lrxja76sRw6uzkKTyChPUg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+      <div class="info"> Học sinh THPT Võ Thị Sáu kính tặng quý thầy cô. Lời cảm ơn gửi từ lớp 12A11! ♥♡♥♡♥ </div>
+      <div class="phase">
+        <span id="phase"></span>
+      </div>
     </div>
-    
-    <div class="phase">
-      <span id="phase"></span>
-    </div>
-  </div>
 
   <script>
     class BubbleBackground {
@@ -142,174 +86,99 @@
         this.canvas = document.getElementById('bubble-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.bubbles = [];
-        this.time = 0;
         this.colorPhase = 0;
-        
-        // Base colors for the gradient (kept subtle)
         this.baseColors = [
-          {r: 70, g: 130, b: 180},   // Steel Blue
-          {r: 100, g: 150, b: 200},  // Light Steel Blue
-          {r: 120, g: 170, b: 220},  // Lighter Blue
-          {r: 80, g: 120, b: 160}    // Darker Blue
+          { r: 70, g: 130, b: 180 },
+          { r: 100, g: 150, b: 200 },
+          { r: 120, g: 170, b: 220 },
+          { r: 80, g: 120, b: 160 }
         ];
-        
         this.currentColors = [...this.baseColors];
-        
         this.resize();
         this.createBubbles(25);
         this.animate();
-        
         window.addEventListener('resize', () => this.resize());
       }
-      
+
       resize() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
       }
-      
+
       createBubbles(count) {
         for (let i = 0; i < count; i++) {
-          const size = Math.random() * 50 + 15;
-          const x = Math.random() * this.canvas.width;
-          const y = Math.random() * this.canvas.height;
-          const speed = Math.random() * 1.5 + 0.3;
-          const opacity = Math.random() * 0.4 + 0.2;
-          
           this.bubbles.push({
-            x,
-            y,
-            size,
-            speed,
-            opacity,
-            color: this.getRandomColor(),
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            size: Math.random() * 50 + 15,
+            speed: Math.random() * 1.5 + 0.3,
+            opacity: Math.random() * 0.4 + 0.2,
+            color: this.randomColor(),
             wobble: Math.random() * 2,
             wobbleSpeed: Math.random() * 0.5 + 0.1
           });
         }
       }
-      
-      getRandomColor() {
+
+      randomColor() {
         const colors = [
-          'rgba(255, 255, 255, ',
-          'rgba(230, 230, 250, ',
-          'rgba(240, 248, 255, ',
-          'rgba(245, 245, 245, ',
-          'rgba(255, 250, 250, '
+          'rgba(255,255,255,', 'rgba(230,230,250,', 
+          'rgba(240,248,255,', 'rgba(245,245,245,', 'rgba(255,250,250,'
         ];
         return colors[Math.floor(Math.random() * colors.length)];
       }
-      
+
       updateColors() {
-        // Slowly cycle through color phases
         this.colorPhase += 0.002;
-        
-        // Update the color indicator
-        document.getElementById('phase').textContent = Math.floor(this.colorPhase * 100) / 100;
-        
-        // Create subtle color variations based on the phase
-        this.currentColors = this.baseColors.map((color, index) => {
-          const phaseOffset = this.colorPhase + index * 0.5;
-          
+        this.currentColors = this.baseColors.map((c, i) => {
+          const p = this.colorPhase + i * 0.5;
           return {
-            r: Math.max(50, Math.min(200, color.r + Math.sin(phaseOffset) * 20)),
-            g: Math.max(50, Math.min(200, color.g + Math.cos(phaseOffset * 0.8) * 15)),
-            b: Math.max(50, Math.min(200, color.b + Math.sin(phaseOffset * 1.2) * 25))
+            r: 70 + Math.sin(p) * 20,
+            g: 130 + Math.cos(p * 0.8) * 15,
+            b: 180 + Math.sin(p * 1.2) * 25
           };
         });
       }
-      
-      drawGradient() {
-        const width = this.canvas.width;
-        const height = this.canvas.height;
-        
-        // Create gradient
-        const gradient = this.ctx.createLinearGradient(0, 0, width, height);
-        
-        // Add color stops with subtle variations
-        gradient.addColorStop(0, this.getColorString(this.currentColors[0]));
-        gradient.addColorStop(0.4, this.getColorString(this.currentColors[1]));
-        gradient.addColorStop(0.7, this.getColorString(this.currentColors[2]));
-        gradient.addColorStop(1, this.getColorString(this.currentColors[3]));
-        
-        // Fill canvas with gradient
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, 0, width, height);
+
+      gradient() {
+        const g = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+        this.currentColors.forEach((c, i) => {
+          g.addColorStop(i / (this.currentColors.length - 1), `rgb(${c.r},${c.g},${c.b})`);
+        });
+        this.ctx.fillStyle = g;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       }
-      
-      getColorString(color) {
-        return `rgb(${Math.floor(color.r)}, ${Math.floor(color.g)}, ${Math.floor(color.b)})`;
-      }
-      
+
       drawBubbles() {
-        this.bubbles.forEach(bubble => {
-          // Update bubble position
-          bubble.y -= bubble.speed;
-          bubble.x += Math.sin(this.time * bubble.wobbleSpeed + bubble.wobble) * 0.7;
-          
-          // Reset bubble if it goes off screen
-          if (bubble.y < -bubble.size) {
-            bubble.y = this.canvas.height + bubble.size;
-            bubble.x = Math.random() * this.canvas.width;
+        this.bubbles.forEach(b => {
+          b.y -= b.speed;
+          b.x += Math.sin(this.colorPhase * b.wobbleSpeed + b.wobble) * 0.7;
+          if (b.y < -b.size) {
+            b.y = this.canvas.height + b.size;
+            b.x = Math.random() * this.canvas.width;
           }
-          
-          // Draw bubble
-          this.ctx.beginPath();
-          this.ctx.arc(bubble.x, bubble.y, bubble.size, 0, Math.PI * 2);
-          
-          // Bubble gradient
-          const bubbleGradient = this.ctx.createRadialGradient(
-            bubble.x - bubble.size/3, 
-            bubble.y - bubble.size/3, 
-            0,
-            bubble.x, 
-            bubble.y, 
-            bubble.size
+          const grad = this.ctx.createRadialGradient(
+            b.x - b.size / 3, b.y - b.size / 3, 0, b.x, b.y, b.size
           );
-          
-          bubbleGradient.addColorStop(0, bubble.color + (bubble.opacity + 0.2) + ')');
-          bubbleGradient.addColorStop(1, bubble.color + (bubble.opacity * 0.3) + ')');
-          
-          this.ctx.fillStyle = bubbleGradient;
-          this.ctx.fill();
-          
-          // Bubble highlight
+          grad.addColorStop(0, b.color + (b.opacity + 0.2) + ')');
+          grad.addColorStop(1, b.color + (b.opacity * 0.3) + ')');
+          this.ctx.fillStyle = grad;
           this.ctx.beginPath();
-          this.ctx.arc(
-            bubble.x - bubble.size/3, 
-            bubble.y - bubble.size/3, 
-            bubble.size/4, 
-            0, 
-            Math.PI * 2
-          );
-          this.ctx.fillStyle = `rgba(255, 255, 255, ${bubble.opacity * 0.6})`;
+          this.ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
           this.ctx.fill();
         });
       }
-      
+
       animate() {
-        this.time += 0.01;
-        
-        // Update colors automatically
         this.updateColors();
-        
-        // Clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Draw gradient background
-        this.drawGradient();
-        
-        // Draw bubbles
+        this.gradient();
         this.drawBubbles();
-        
-        // Continue animation
         requestAnimationFrame(() => this.animate());
       }
     }
-    
-    // Initialize when page loads
-    window.addEventListener('load', () => {
-      new BubbleBackground();
-    });
+
+    window.addEventListener('load', () => new BubbleBackground());
   </script>
 </body>
 </html>
