@@ -80,6 +80,31 @@
       </div>
     </div>
 
+  <audio id="backgroundMusic" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Handle autoplay - add this script once
+(function() {
+    const audio = document.getElementById('backgroundMusic');
+    
+    // Attempt to play
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.catch(function(error) {
+            // Autoplay was prevented
+            console.log('Autoplay blocked. User interaction required.');
+            
+            // Play on first user interaction
+            document.addEventListener('click', function() {
+                audio.play();
+            }, { once: true });
+        });
+    }
+})();
+</script>
   <script>
     class BubbleBackground {
       constructor() {
@@ -182,3 +207,4 @@
   </script>
 </body>
 </html>
+
