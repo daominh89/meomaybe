@@ -80,29 +80,42 @@
       </div>
     </div>
 
-  <audio id="backgroundMusic" autoplay loop>
-    <source src="/music.mp3" type="audio/mpeg">
+  <!-- Add this snippet anywhere in your HTML body -->
+
+<!-- Permission dialog overlay -->
+<div id="musicDialog" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+    <div style="background: white; padding: 30px 40px; border-radius: 15px; text-align: center; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+        <div style="font-size: 50px; margin-bottom: 15px;">🎵</div>
+        <h2 style="margin: 0 0 20px 0; color: #333;">Cho phép nhạc</h2>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button id="yesBtn" style="background: #4CAF50; color: white; border: none; padding: 12px 35px; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;">Yes</button>
+            <button id="noBtn" style="background: #f44336; color: white; border: none; padding: 12px 35px; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden audio element -->
+<audio id="backgroundMusic" loop style="display: none;">
+    <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Handle autoplay - add this script once
 (function() {
     const audio = document.getElementById('backgroundMusic');
+    const dialog = document.getElementById('musicDialog');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
     
-    // Attempt to play
-    const playPromise = audio.play();
+    // Handle Yes button - play music and close dialog
+    yesBtn.addEventListener('click', function() {
+        audio.play();
+        dialog.style.display = 'none';
+    });
     
-    if (playPromise !== undefined) {
-        playPromise.catch(function(error) {
-            // Autoplay was prevented
-            console.log('Autoplay blocked. User interaction required.');
-            
-            // Play on first user interaction
-            document.addEventListener('click', function() {
-                audio.play();
-            }, { once: true });
-        });
-    }
+    // Handle No button - just close dialog
+    noBtn.addEventListener('click', function() {
+        dialog.style.display = 'none';
+    });
 })();
 </script>
   <script>
@@ -207,5 +220,6 @@
   </script>
 </body>
 </html>
+
 
 
